@@ -1,6 +1,7 @@
 {
   "name": "scpper.js",
   "version": "0.0.0-development",
+  "description": "NodeJS API wrapper for ScpperDB API",
   "author": {
     "name": "HelloEdit",
     "url": "https://github.com/HelloEdit/"
