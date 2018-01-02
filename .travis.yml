@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - 9
+  - 8
+
+cache:
+  directories:
+    - ~/.npm
+
+notifications:
+  email: false
+
+os:
+  - linux
+
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
+
+# Retry install on fail to avoid failing a build on network/disk/external errors
+install:
+  - travis_retry yarn install
+
+script:
+  - yarn test
+
+after_success:
+  - yarn build
+  - yarn global add travis-deploy-once@4
+  - travis-deploy-once "yarn semantic-release"
