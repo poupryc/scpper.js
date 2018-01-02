@@ -1,0 +1,44 @@
+{
+  "name": "scpper.js",
+  "version": "0.0.0-development",
+  "author": {
+    "name": "HelloEdit",
+    "url": "https://github.com/HelloEdit/"
+  },
+  "scripts": {
+    "test": "nyc mocha",
+    "build": "npx gulp build",
+    "semantic-release": "semantic-release"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "main": "lib/index",
+  "typings": "lib/index.d.ts",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mocha": "^2.2.45",
+    "@types/node": "^8.5.2",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.2",
+    "gulp-typescript": "^3.2.3",
+    "mocha": "^4.0.1",
+    "nock": "^9.1.5",
+    "nyc": "^11.4.1",
+    "semantic-release": "^11.0.2",
+    "source-map-support": "^0.5.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.8.0",
+    "tslint-config-standard": "^7.0.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "apisauce": "^0.14.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HelloEdit/scpper.js.git"
+  }
+}

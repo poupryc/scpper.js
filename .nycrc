@@ -1,0 +1,12 @@
+{
+  "extension": [
+    ".ts"
+  ],
+  "exclude": [
+    "lib",
+    "gulpfile.js",
+    "test/**",
+    "src/typings/"
+  ],
+  "all": true
+}
