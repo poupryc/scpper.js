@@ -11,6 +11,12 @@
     "build": "npx gulp build",
     "semantic-release": "semantic-release"
   },
+  "keywords": [
+    "foundation",
+    "scpperDB",
+    "scpper"
+    "scp",
+  ],
   "engines": {
     "node": ">=8.0.0"
   },
