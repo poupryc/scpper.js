@@ -1,3 +1,4 @@
+// region Page items
 export interface AuthorField {
   user: string
   role: string
@@ -10,7 +11,7 @@ export interface DateField {
   timezone: string
 }
 
-export interface InfoItem {
+export interface PageItem {
   id: number
   name: string
   title: string
@@ -27,6 +28,32 @@ export interface InfoItem {
   authors: AuthorField[]
 }
 
-export interface Root {
-  pages: InfoItem[]
+export interface RootPages {
+  pages: PageItem[]
 }
+//endregion
+
+// region User items
+export interface ActivityField {
+  votes: number
+  revisions: number
+  pages: number
+  lastActive?: DateField
+  member: DateField
+  highestRating?: number
+  totalRating?: number
+}
+
+export interface UserItem {
+  id: number
+  name: string
+  displayName: string
+  deleted: number
+  activity: { [key: string]: ActivityField }
+}
+
+export interface RootUsers {
+  users: UserItem[]
+}
+// endregion
+

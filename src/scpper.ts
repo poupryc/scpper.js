@@ -3,7 +3,7 @@ import * as apisauce from 'apisauce'
 import { ScpperOptions } from './typings/ScpperOptions'
 import { SiteInitial } from './typings/SiteInitial'
 import { AxiosRequestConfig } from 'axios'
-import { Root } from './typings/ScpperAPI'
+import { RootPages, UserItem, PageItem, RootUsers } from './typings/ScpperAPI'
 import { FindPagesOptions, FindUsersOptions, FindWithTag } from './typings/FindOptions'
 
 export class Scpper {
@@ -43,8 +43,8 @@ export class Scpper {
    * @param id wikidot id of the requested page
    */
   public async getPage (id: number) {
-    const response = await this.api.get('page', { id }) as apisauce.ApiResponse<Root>
-
+    const response = await this.api.get('page', { id }) as apisauce.ApiResponse<PageItem>
+    
     if (!response.ok) {
       throw new Error(response.problem)
     }
@@ -56,7 +56,7 @@ export class Scpper {
    * @param id wikidot id of the requested user
    */
   public async getUser (id: number) {
-    const response = await this.api.get('user', { id }) as apisauce.ApiResponse<Root>
+    const response = await this.api.get('user', { id }) as apisauce.ApiResponse<UserItem>
 
     if (!response.ok) {
       throw new Error(response.problem)
@@ -72,7 +72,7 @@ export class Scpper {
     const response = await this.api.get('find-pages', {
       title: search,
       ...options
-    }) as apisauce.ApiResponse<Root>
+    }) as apisauce.ApiResponse<RootPages>
 
     if (!response.ok) {
       throw new Error(response.problem)
@@ -88,7 +88,7 @@ export class Scpper {
     const response = await this.api.get('find-users', {
       name: search,
       ...options
-    }) as apisauce.ApiResponse<Root>
+    }) as apisauce.ApiResponse<RootUsers>
 
     if (!response.ok) {
       throw new Error(response.problem)
@@ -110,7 +110,7 @@ export class Scpper {
     const response = await this.api.get('tags', {
       tags: tag,
       ...options
-    }) as apisauce.ApiResponse<Root>
+    }) as apisauce.ApiResponse<RootPages>
 
     if (!response.ok) {
       throw new Error(response.problem)
