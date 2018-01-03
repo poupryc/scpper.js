@@ -92,12 +92,30 @@ options - Object (optional)
 
 The responses are promise-based, so you you'll need to handle things in a .then() function or `await` if you use ES7.
 
+```js
+api.findPages('173')
+  .then(i => console.log(i))
+  .catch(console.log)
+
+// or if you are more ES7
+
+try {
+  const result = await api.findPages('173')
+  console.log(result.data)
+} catch(err) {
+  // See constant below
+  console.log(err)
+}
+```
+
+To see in detail what each method returns, [see this page](https://github.com/FiftyNine/ScpperDB#api).
+
 The promised is resolved if no error has occurred (see below).
 
 ```
 Constant        VALUE               Status Code   Explanation
 ----------------------------------------------------------------------------------------
-NONE             null               200-299       No problems.
+NONE             null               200-299       No problems. The promise is resolved.
 CLIENT_ERROR     'CLIENT_ERROR'     400-499       Any non-specific 400 series error.
 SERVER_ERROR     'SERVER_ERROR'     500-599       Any 500 series error.
 TIMEOUT_ERROR    'TIMEOUT_ERROR'    ---           Server didn't respond in time.
@@ -148,4 +166,4 @@ SCP Foundation and all related works were created by SCP creative community and 
 
 Thanks to FiftyNine for the API and for his infinite patience during our exchanges !
 
-Thanks also to all my friends of the french Foundation branch <3
+Thanks also to all my friends of the french Foundation branch, and for the unconditional love of Boule De Neige <3
