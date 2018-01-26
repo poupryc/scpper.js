@@ -31,7 +31,7 @@ export interface PageItem {
 export interface RootPages {
   pages: PageItem[]
 }
-//endregion
+// endregion
 
 // region User items
 export interface ActivityField {
@@ -56,4 +56,3 @@ export interface RootUsers {
   users: UserItem[]
 }
 // endregion
-
