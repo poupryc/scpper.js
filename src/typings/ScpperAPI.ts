@@ -26,6 +26,7 @@ export interface PageItem {
   wilsonScore: number
   rank: number
   authors: AuthorField[]
+  deleted: boolean
 }
 
 export interface RootPages {
