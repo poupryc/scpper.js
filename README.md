@@ -27,7 +27,7 @@ You create an instance of Scpper by calling `new Scpper()` and passing in a conf
 const api = new Scpper({ site: 'en' })
 ```
 
-The only required property is "site", which is the abbreviation of the site whose data you want to use. The Scpper class also accepts as property `limit`, which defines how many items the API should return for queries, and `url` if you want to use your own Scpper installation.
+The only required property is "site", which is the abbreviation of the site whose data you want to use. You [**must pass a valid abbreviation**](https://github.com/HelloEdit/scpper.js/blob/develop/src/typings/SiteInitial.ts) to "site" otherwise, an exception will be throw. The Scpper class also accepts as property `limit`, which defines how many items the API should return for queries, and `url` if you want to use your own Scpper installation.
 
 The Scpper class also accepts as second parameter an [Axios configuration object](https://github.com/axios/axios#request-config)(optional).
 
@@ -87,6 +87,15 @@ options - Object (optional)
 >    Each tag MUST be prefixed by only ONE of those options.
 
 > You don't need to add a prefix if you pass only a string and not an array.
+
+You can also change "site" property, which is the abbreviation of the site whose data you want to use with a valid initial, otherwise, it will throw an error.
+
+```js
+api.site = 'fr'
+
+api.site = 'be'
+// Error: Branch "be" is not supported yet.
+```
 
 ### Response
 
@@ -159,6 +168,7 @@ List of available sites (API names in quotes) from [ScpperDB](https://github.com
 - [German branch](scp-wiki-de.wikidot.com): "de"
 - [Chinese branch](scp-wiki-cn.wikidot.com): "cn"
 - [Italian branch](fondazionescp.wikidot.com): "it"
+- [International Archive](http://scp-int.wikidot.com): "int"
 
 SCP Foundation and all related works were created by SCP creative community and are available under CC BY-SA 3.0 license.
 
