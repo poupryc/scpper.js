@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from 'axios'
 import { SiteInitial } from './SiteInitial'
 
 export interface ScpperOptions {
-  site: SiteInitial
+  site: keyof typeof SiteInitial
   limit?: number
   url?: string
 }
