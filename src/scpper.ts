@@ -9,12 +9,20 @@ import { FindPagesOptions, FindUsersOptions, FindWithTag } from './typings/FindO
 export class Scpper {
   public readonly url: string = 'http://scpper.com/api/'
   public readonly api: apisauce.ApisauceInstance
-  public readonly site: SiteInitial
   public readonly limit: number
+  protected _site: SiteInitial
 
   constructor (options: ScpperOptions, config?: AxiosRequestConfig) {
+    if (!options) {
+      throw new Error('Configuration must be present')
+    }
+
     if (options.url) {
       this.url = options.url
+    }
+
+    if (!options.site) {
+      throw new Error('You need to pass "site" property')
     }
 
     this.site = options.site
@@ -44,7 +52,7 @@ export class Scpper {
    */
   public async getPage (id: number) {
     const response = await this.api.get('page', { id }) as apisauce.ApiResponse<PageItem>
-    
+
     if (!response.ok) {
       throw new Error(response.problem)
     }
@@ -118,4 +126,20 @@ export class Scpper {
 
     return response
   }
+
+  // region setter and getter
+  set site (initial: string) {
+    initial = initial.toLowerCase()
+
+    if (!(initial in SiteInitial)) {
+      throw new Error(`Branch "${initial}" is not supported yet.`)
+    }
+
+    this._site = initial as SiteInitial
+  }
+
+  get site () {
+    return this._site
+  }
+  // endregion
 }
