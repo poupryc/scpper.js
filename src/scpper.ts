@@ -36,7 +36,9 @@ export class Scpper {
     // Auto-fill "site" and "limit" on each request.
     this.api.addRequestTransform(request => {
       // Fill "site" if site is not provided
-      if (!request.params.site) {
+      if (request.params.site === false) {
+        delete request.params.site
+      } else if (!request.params.site) {
         request.params.site = this.site
       }
 
