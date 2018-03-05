@@ -228,16 +228,30 @@ describe('Testing URL calls', () => {
         .to.not.be.rejected
     })
 
-    it('Test custom "site"', () => {
-      nock(scpper.url)
-        .get('/find-pages')
-        .query({ title: '173', site: 'fr' })
-        .reply(200)
+    describe('Test with custom "site"', () => {
+      it('Test with another site', () => {
+        nock(scpper.url)
+          .get('/find-pages')
+          .query({ title: '173', site: 'fr' })
+          .reply(200)
 
-      return expect(scpper.findPages('173', {
-        site: 'fr'
-      }))
-        .to.not.be.rejected
+        return expect(scpper.findPages('173', {
+          site: 'fr'
+        }))
+          .to.not.be.rejected
+      })
+
+      it('Test with false', () => {
+        nock(scpper.url)
+          .get('/find-pages')
+          .query({ title: '173' })
+          .reply(200)
+
+        return expect(scpper.findPages('173', {
+          site: false
+        }))
+          .to.not.be.rejected
+      })
     })
   })
 
