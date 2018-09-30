@@ -1,12 +1,4 @@
 {
-  "extension": [
-    ".ts"
-  ],
-  "exclude": [
-    "lib",
-    "gulpfile.js",
-    "test/**",
-    "src/typings/"
-  ],
-  "all": true
+  "exclude": ["**/*.d.ts", "**/test/*", "**/types/*", "ava.config.js"],
+  "extension": [".ts"]
 }

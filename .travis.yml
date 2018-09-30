@@ -1,31 +1,31 @@
 language: node_js
 node_js:
+  - 10
   - 9
   - 8
+
+notifications:
+  email: false
 
 cache:
   directories:
     - ~/.npm
 
-notifications:
-  email: false
-
-os:
-  - linux
+script:
+  - npm run build -- --noEmit
+  - npm run test
+  - npm run coverage
 
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+  only:
+    - master
+    - dev
+    - /^greenkeeper.*$/
 
-# Retry install on fail to avoid failing a build on network/disk/external errors
-install:
-  - travis_retry yarn install
-
-script:
-  - yarn test
-
-after_success:
-  - yarn build
-  - yarn coverage
-  - yarn global add travis-deploy-once@4
-  - travis-deploy-once "yarn semantic-release"
+jobs:
+  include:
+    - stage: deploy
+      if: branch = master
+      script:
+        - npm run build
+        - npm run release

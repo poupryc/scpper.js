@@ -1,332 +1,96 @@
-import * as nock from 'nock'
-import * as chai from 'chai'
-import * as chaiAsPromised from 'chai-as-promised'
+import test from 'ava'
 
 import { Scpper } from '../src'
-const { expect } = chai
+import { createApi } from '../src/util'
 
-chai.use(chaiAsPromised)
-
-describe('Testing instance creation', () => {
-  it('Throw error when creating instance without argument', () => {
-    expect(() => {
-      const scpper = new Scpper()
-    }).to.throw('Configuration must be present')
-  })
-
-  describe('Test constructor property', () => {
-
-    it('Creating instance with correct "site" property', () => {
-      let scpper: Scpper
-      expect(() => {
-        scpper = new Scpper({ site: 'en' })
-      }).to.not.throw()
-
-      expect(scpper.site).to.be.equal('en')
-    })
-
-    it('Creating instance with "limit" property', () => {
-      let scpper: Scpper
-      expect(() => {
-        scpper = new Scpper({ site: 'en', limit: 25 })
-      }).to.not.throw()
-
-      expect(scpper.site).to.be.equal('en')
-      expect(scpper.limit).to.be.equal(25)
-    })
-
-    it('Throw error when creating instance without "site" property', () => {
-      expect(() => {
-        const scpper = new Scpper({ blabla: 'blabla !' })
-      }).to.throw('You need to pass "site" property')
-    })
-
-    it('Throw error when creating instance with incorrect "site" property', () => {
-      expect(() => {
-        const scpper = new Scpper({ site: 'be' })
-      }).to.throw('Branch "be" is not supported yet.')
-    })
-  })
-
-  it('Creating instance with "site", "limit" & "url" properties', () => {
-    let scpper: Scpper
-    expect(() => {
-      scpper = new Scpper({ site: 'en', limit: 10, url: 'https://api.foundation.com/does/not/exist' })
-    }).to.not.throw()
-
-    expect(scpper.site).to.be.equal('en')
-    expect(scpper.limit).to.be.equal(10)
-    expect(scpper.url).to.be.equal('https://api.foundation.com/does/not/exist')
-  })
+test('create new scpper', t => {
+  t.notThrows(() => new Scpper())
 })
 
-describe('Testing URL calls', () => {
-  let scpper: Scpper
-  before(() => {
-    scpper = new Scpper({ site: 'en' })
+test('`new scpper` should throw when instanciated with wrong options', t => {
+  // @ts-ignore
+  t.throws(() => new Scpper('lol'), {
+    message: 'options should be an object',
+    instanceOf: TypeError
   })
 
-  afterEach(() => {
-    nock.cleanAll()
-  })
-
-  it('Test get page', () => {
-    nock(scpper.url)
-      .get('/page')
-      .query({ id: 1956234, site: 'en' })
-      .reply(200)
-
-    return expect(scpper.getPage(1956234))
-      .to.not.be.rejected
-  })
-
-  it('Test get user', () => {
-    nock(scpper.url)
-      .get('/user')
-      .query({ id: 966960, site: 'en' })
-      .reply(200)
-
-    return expect(scpper.getUser(966960))
-      .to.not.be.rejected
-  })
-
-  it('Test find pages', () => {
-    nock(scpper.url)
-      .get('/find-pages')
-      .query({ title: '173', site: 'en' })
-      .reply(200)
-
-    return expect(scpper.findPages('173'))
-      .to.not.be.rejected
-  })
-
-  it('Test find users', () => {
-    nock(scpper.url)
-      .get('/find-users')
-      .query({ name: 'clef', site: 'en' })
-      .reply(200)
-
-    return expect(scpper.findUsers('clef'))
-      .to.not.be.rejected
-  })
-
-  describe('Test tag search', () => {
-    afterEach(() => {
-      nock.cleanAll()
-    })
-
-    it('With array', () => {
-      nock(scpper.url)
-        .get('/tags')
-        .query({ tags: '+scp,+keter', site: 'en' })
-        .reply(200)
-
-      return expect(scpper.findWithTag(['+scp', '+keter']))
-        .to.not.be.rejected
-    })
-
-    it('With string', () => {
-      nock(scpper.url)
-        .get('/tags')
-        .query({ tags: '+scp', site: 'en' })
-        .reply(200)
-
-      return expect(scpper.findWithTag('scp'))
-        .to.not.be.rejected
-    })
-  })
-
-  describe('Test with custom "limit" property', () => {
-    let scpper: Scpper
-    before(() => {
-      scpper = new Scpper({ site: 'en', limit: 5 })
-    })
-
-    afterEach(() => {
-      nock.cleanAll()
-    })
-
-    it('Test get page', () => {
-      nock(scpper.url)
-        .get('/page')
-        .query({ id: 1956234, site: 'en', limit: 5 })
-        .reply(200)
-
-      return expect(scpper.getPage(1956234))
-        .to.not.be.rejected
-    })
-
-    it('Test get user', () => {
-      nock(scpper.url)
-        .get('/user')
-        .query({ id: 966960, site: 'en', limit: 5 })
-        .reply(200)
-
-      return expect(scpper.getUser(966960))
-        .to.not.be.rejected
-    })
-
-    it('Test find pages', () => {
-      nock(scpper.url)
-        .get('/find-pages')
-        .query({ title: '173', site: 'en', limit: 5 })
-        .reply(200)
-
-      return expect(scpper.findPages('173'))
-        .to.not.be.rejected
-    })
-
-    it('Test find users', () => {
-      nock(scpper.url)
-        .get('/find-users')
-        .query({ name: 'clef', site: 'en', limit: 5 })
-        .reply(200)
-
-      return expect(scpper.findUsers('clef'))
-        .to.not.be.rejected
-    })
-
-    describe('Test tag search', () => {
-      afterEach(() => {
-        nock.cleanAll()
-      })
-
-      it('With array', () => {
-        nock(scpper.url)
-          .get('/tags')
-          .query({ tags: '+scp,+keter', site: 'en', limit: 5 })
-          .reply(200)
-
-        return expect(scpper.findWithTag(['+scp', '+keter']))
-          .to.not.be.rejected
-      })
-
-      it('With string', () => {
-        nock(scpper.url)
-          .get('/tags')
-          .query({ tags: '+scp', site: 'en', limit: 5 })
-          .reply(200)
-
-        return expect(scpper.findWithTag('scp'))
-          .to.not.be.rejected
-      })
-    })
-  })
-
-  describe('Test with custom options', () => {
-    it('Test custom "limit"', () => {
-      const rand = Math.floor(Math.random() * (50 - 1)) + 1
-
-      nock(scpper.url)
-        .get('/find-pages')
-        .query({ title: '173', site: 'en', limit: rand })
-        .reply(200)
-
-      return expect(scpper.findPages('173', {
-        limit: rand
-      }))
-        .to.not.be.rejected
-    })
-
-    describe('Test with custom "site"', () => {
-      it('Test with another site', () => {
-        nock(scpper.url)
-          .get('/find-pages')
-          .query({ title: '173', site: 'fr' })
-          .reply(200)
-
-        return expect(scpper.findPages('173', {
-          site: 'fr'
-        }))
-          .to.not.be.rejected
-      })
-
-      it('Test with false', () => {
-        nock(scpper.url)
-          .get('/find-pages')
-          .query({ title: '173' })
-          .reply(200)
-
-        return expect(scpper.findPages('173', {
-          site: false
-        }))
-          .to.not.be.rejected
-      })
-    })
-  })
-
+  t.notThrows(() => new Scpper({}))
 })
 
-describe('Test methods rejections', () => {
-  let scpper: Scpper
-  before(() => {
-    scpper = new Scpper({ site: 'en' })
+test('should throw on incorrect site property', t => {
+  t.throws(
+    () =>
+      // @ts-ignore
+      new Scpper({ site: 'ca' }),
+    { message: 'ca is not a valid wiki site' }
+  )
+})
+
+test('should throw on incorrect limit property', t => {
+  t.throws(
+    () =>
+      // @ts-ignore
+      new Scpper({ limit: 'lol' }),
+    { message: 'limit must be a number' }
+  )
+})
+
+test('should have correct property', t => {
+  const scpper = new Scpper({ site: 'fr', limit: 25 })
+
+  t.is(scpper.limit, 25)
+  t.is(scpper.site, 'fr')
+})
+
+test('should merge axios config', t => {
+  const scpper = new Scpper({
+    baseURL: 'https://google.com',
+    headers: {
+      test: 'hello'
+    }
   })
 
-  afterEach(() => {
-    nock.cleanAll()
-  })
+  t.is(scpper.api.getBaseURL(), 'https://google.com')
+  t.is(scpper.api.headers.test, 'hello')
+})
 
-  describe('client error', () => {
-    it('Test find pages', () => {
-      nock(scpper.url)
-        .get('/find-pages')
-        .query(true)
-        .reply(404)
+test('should throw when setting an inccorect site', t => {
+  const scpper = new Scpper()
 
-      return expect(scpper.findPages('guide'))
-        .to.be.rejectedWith('CLIENT_ERROR')
-    })
+  t.throws(
+    () => {
+      // @ts-ignore
+      scpper.site = 'ca'
+    },
+    { message: 'ca is not a valid wiki site' }
+  )
 
-    it('Test get page', () => {
-      nock(scpper.url)
-        .get('/page')
-        .query(true)
-        .reply(404)
+  t.not(scpper.site, 'ca')
+})
 
-      return expect(scpper.getPage(1956234))
-        .to.be.rejectedWith('CLIENT_ERROR')
-    })
+test('should throw when setting an incorrect limit', t => {
+  const scpper = new Scpper()
 
-    it('Test get user', () => {
-      nock(scpper.url)
-        .get('/user')
-        .query(true)
-        .reply(404)
+  t.throws(
+    () => {
+      // @ts-ignore
+      scpper.limit = 'lol'
+    },
+    { message: 'limit must be a number' }
+  )
 
-      return expect(scpper.getUser(966960))
-        .to.be.rejectedWith('CLIENT_ERROR')
-    })
+  // @ts-ignore
+  t.not(scpper.limit, 'ca')
+})
 
-    it('Test find pages', () => {
-      nock(scpper.url)
-        .get('/find-pages')
-        .query(true)
-        .reply(404)
+test('should get API url', t => {
+  const scpper = new Scpper({ baseURL: 'https://mysuper.scpper.api' })
 
-      return expect(scpper.findPages('173'))
-        .to.be.rejectedWith('CLIENT_ERROR')
-    })
+  t.is(scpper.url, 'https://mysuper.scpper.api')
+})
 
-    it('Test find users', () => {
-      nock(scpper.url)
-        .get('/find-users')
-        .query(true)
-        .reply(404)
-
-      return expect(scpper.findUsers('clef'))
-        .to.be.rejectedWith('CLIENT_ERROR')
-    })
-
-    it('Test with find tags', () => {
-      nock(scpper.url)
-        .get('/tags')
-        .query(true)
-        .reply(404)
-
-      return expect(scpper.findWithTag(['+scp', '+keter']))
-        .to.be.rejectedWith('CLIENT_ERROR')
-    })
-
-  })
+test('`createApi` should return apisauce object', t => {
+  const api = createApi()
+  t.truthy(api)
+  t.truthy(api.axiosInstance)
 })
