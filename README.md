@@ -27,7 +27,7 @@ You create an instance of Scpper by calling `new Scpper()` and passing in a conf
 const api = new Scpper({ site: 'en' })
 ```
 
-The only required property is "site", which is the abbreviation of the site whose data you want to use. You [**must pass a valid abbreviation**](https://github.com/HelloEdit/scpper.js/blob/develop/src/typings/SiteInitial.ts) to "site" otherwise, an exception will be throw. The Scpper class also accepts as property `limit`, which defines how many items the API should return for queries, and `url` if you want to use your own Scpper installation.
+You [**must pass a valid abbreviation**](https://github.com/HelloEdit/scpper.js/blob/dev/src/types/Api.ts#L12) to "site" otherwise, an exception will be throw. Scpper class also accepts as property `limit`, which defines how many items the API should return for queries, and `baseUrl` if you want to use your own Scpper installation.
 
 The Scpper class also accepts as second parameter an [Axios configuration object](https://github.com/axios/axios#request-config)(optional).
 
@@ -36,13 +36,13 @@ The Scpper class also accepts as second parameter an [Axios configuration object
 You can now call it like this:
 
 ```js
-api.getPage(1956234)
-api.getUser(966960)
+api.getPage('1956234')
+api.getUser('966960')
 ```
 
 `getPage` and `getUser` accept 1 parameter:
 
-id - number - the id of the requested ressource, wikidot user ID or user page ID (required)
+id - string - the id of the requested ressource, wikidot user ID or user page ID (required)
 
 ```js
 api.findPages('scp-002')
@@ -99,7 +99,7 @@ You can also change "site" property, which is the abbreviation of the site whose
 api.site = 'fr'
 
 api.site = 'be'
-// Error: Branch "be" is not supported yet.
+// Error: be is not valid
 ```
 
 ### Response
