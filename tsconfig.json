@@ -3,6 +3,7 @@
     "module": "commonjs",
     "target": "es6",
     "declaration": true,
-    "outDir": "lib/"
-  }
+    "outDir": "dist/"
+  },
+  "exclude": ["./test"]
 }
