@@ -47,25 +47,29 @@ id - number - the id of the requested ressource, wikidot user ID or user page ID
 ```js
 api.findPages('scp-002')
 ```
+
 `findPages` accept 2 parameters:
 
 search - the name of the page you are looking for in ScpperDB (required)
 
 options - Object (optional)
-  - `site` - Overwrite site property for this request (optional)
-  - `limit` - Overwrite limit property for this request (optional)
-  - `random` - boolean - indicating whether resulting list of pages should be randomized (optional)
+
+- `site` - Overwrite site property for this request (optional)
+- `limit` - Overwrite limit property for this request (optional)
+- `random` - boolean - indicating whether resulting list of pages should be randomized (optional)
 
 ```js
 api.findUsers('Anqxyr')
 ```
+
 `findUsers` accept 2 parameters:
 
 search - the name of the user you are looking for in ScpperDB (required)
 
 options - Object (optional)
-  - `site` - Overwrite site property for this request (optional)
-  - `limit` - Overwrite limit property for this request (optional)
+
+- `site` - Overwrite site property for this request (optional)
+- `limit` - Overwrite limit property for this request (optional)
 
 ```js
 api.findWithTag('keter')
@@ -76,15 +80,16 @@ api.findWithTag(['-keter', '+euclide'])
 tag - string or array - the tag search you want to perform(required)
 
 options - Object (optional)
-  - `site` - Overwrite site property for this request (optional)
-  - `limit` - Overwrite limit property for this request (optional)
-  - `method` - ("and"|"or") - How to combine provided tags for the query (optional)
-  - `random` - boolean - indicating whether resulting list of pages should be randomized (optional)
 
-> The list of tags (array) must be  prefixed with "+" or "-"
->    "+" indicates that pages containing this tag must be included in the query
->    "-" indicates that pages containing this tag must be excluded from the query
->    Each tag MUST be prefixed by only ONE of those options.
+- `site` - Overwrite site property for this request (optional)
+- `limit` - Overwrite limit property for this request (optional)
+- `method` - ("and"|"or") - How to combine provided tags for the query (optional)
+- `random` - boolean - indicating whether resulting list of pages should be randomized (optional)
+
+> The list of tags (array) must be prefixed with "+" or "-"
+> "+" indicates that pages containing this tag must be included in the query
+> "-" indicates that pages containing this tag must be excluded from the query
+> Each tag MUST be prefixed by only ONE of those options.
 
 > You don't need to add a prefix if you pass only a string and not an array.
 
@@ -102,7 +107,8 @@ api.site = 'be'
 The responses are promise-based, so you you'll need to handle things in a .then() function or `await` if you use ES7.
 
 ```js
-api.findPages('173')
+api
+  .findPages('173')
   .then(i => console.log(i))
   .catch(console.log)
 
@@ -111,7 +117,7 @@ api.findPages('173')
 try {
   const result = await api.findPages('173')
   console.log(result.data)
-} catch(err) {
+} catch (err) {
   // See constant below
   console.log(err)
 }
@@ -157,6 +163,7 @@ duration - Number - the number of milliseconds it took to run this request
 ---
 
 List of available sites (API names in quotes) from [ScpperDB](https://github.com/FiftyNine/ScpperDB#list-of-available-sites-api-names-in-quotes):
+
 - [SCP Foundation](scp-wiki.net): "en"
 - [Russian branch](scpfoundation.ru): "ru"
 - [Korean branch](ko.scp-wiki.net): "ko"

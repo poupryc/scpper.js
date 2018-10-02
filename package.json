@@ -19,9 +19,6 @@
     "scpper",
     "scp"
   ],
-  "engines": {
-    "node": ">=8.0.0"
-  },
   "main": "lib/index",
   "typings": "lib/index.d.ts",
   "license": "MIT",
