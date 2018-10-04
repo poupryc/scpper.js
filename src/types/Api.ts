@@ -44,7 +44,7 @@ export namespace Api {
   }
 
   export type searchUser = {
-    users: PageItem[]
+    users: UserItem[]
   }
 
   export type searchTag = searchPage
