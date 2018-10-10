@@ -72,12 +72,12 @@ options - Object (optional)
 - `limit` - Overwrite limit property for this request (optional)
 
 ```js
-api.findWithTag('keter')
+api.findTag('+keter')
 // or
-api.findWithTag(['-keter', '+euclide'])
+api.findTag(['-keter', '+euclide'])
 ```
 
-tag - string or array - the tag search you want to perform(required)
+tag - string or array - the tag search you want to perform (required)
 
 options - Object (optional)
 
@@ -91,15 +91,13 @@ options - Object (optional)
 > "-" indicates that pages containing this tag must be excluded from the query
 > Each tag MUST be prefixed by only ONE of those options.
 
-> You don't need to add a prefix if you pass only a string and not an array.
-
 You can also change "site" property, which is the abbreviation of the site whose data you want to use with a valid initial, otherwise, it will throw an error.
 
 ```js
 api.site = 'fr'
 
-api.site = 'be'
-// Error: be is not valid
+api.site = 'ca'
+// Error: ca is not a valid wiki site
 ```
 
 ### Response
