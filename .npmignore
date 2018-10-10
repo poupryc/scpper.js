@@ -13,6 +13,8 @@ src
 .nycrc
 tsconfig.json
 tslint.json
-gulpfile.json
 .gitignore
 test
+.prettierrc
+.prettierignore
+ava.config.js
