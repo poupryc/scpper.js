@@ -21,6 +21,7 @@ export namespace Api {
     de = 'de',
     cn = 'cn',
     it = 'it',
+    vn = 'vn',
     int = 'int'
   }
 
@@ -36,6 +37,7 @@ export namespace Api {
     de = 'http://scp-wiki-de.wikidot.com',
     cn = 'http://scp-wiki-cn.wikidot.com',
     it = 'http://fondazionescp.wikidot.com',
+    vn = 'http://scp-vn.wikidot.com',
     int = 'http://scp-int.wikidot.com'
   }
 
